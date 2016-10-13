@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+  <util:properties id="defaultMailProps">
+    <prop key="host">smtp host</prop>
+    <prop key="port">465</prop>
+    <prop key="protocol">smtp</prop>
+    <prop key="username">username</prop>
+    <prop key="password">password</prop>
+  </util:properties>
+
+  <util:properties id="mailProps">
+    <prop key="mail.smtp.auth">true</prop>
+    <prop key="mail.smtp.port">#{defaultMailProps['port']}</prop>
+    <prop key="mail.smtp.starttls.enable">true</prop>
+    <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+    <prop key="mail.smtp.socketFactory.fallback">false</prop>
+    <prop key="mail.smtp.socketFactory.port">#{defaultMailProps['port']}</prop>
+  </util:properties>
+
+  <bean id="defaultMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"
+    p:host="#{defaultMailProps['host']}"
+    p:port="#{defaultMailProps['port']}"
+    p:protocol="#{defaultMailProps['protocol']}"
+    p:username="#{defaultMailProps['username']}"
+    p:password="#{defaultMailProps['password']}"
+    p:javaMailProperties="#{mailProps}" />
+
+</beans>
