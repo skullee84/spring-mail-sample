@@ -1,6 +1,6 @@
 # Spring Mail Sample
 
-POST /mail/send
+POST /api/mail/send
 
 content-type: application/json
 
